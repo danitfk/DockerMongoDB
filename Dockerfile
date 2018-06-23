@@ -36,3 +36,4 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
 CMD /etc/init.d/ssh start
+CMD tail -f /dev/null
