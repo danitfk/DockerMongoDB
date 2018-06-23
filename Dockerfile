@@ -5,7 +5,7 @@ FROM       ubuntu:16.04
 # Installation:
 
 # Update apt-get sources AND install MongoDB
-RUN apt-get update && apt-get install -y mongodb-server openssh-server nano pwgen wget
+RUN apt-get update && apt-get install -y mongodb-server openssh-server nano pwgen wget net-tools telnet 
 
 # Create the MongoDB data directory
 RUN mkdir -p /data/db
@@ -32,6 +32,6 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
-CMD /etc/init.d/ssh start
-CMD /etc/init.d/mongodb start
+RUN /etc/init.d/ssh start
+RUN /etc/init.d/mongodb start
 CMD tail -f /dev/null
