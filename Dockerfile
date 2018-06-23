@@ -8,7 +8,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 RUN echo "deb http://repo.mongodb.org/apt/ubuntu $(cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d= -f2)/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 
 # Update apt-get sources AND install MongoDB
-RUN apt-get update && apt-get install -y mongodb-org openssh-server
+RUN apt-get update && apt-get install -y mongodb-org openssh-server nano pwgen wget
 
 # Create the MongoDB data directory
 RUN mkdir -p /data/db
@@ -18,6 +18,10 @@ EXPOSE 27017
 
 # Set /usr/bin/mongod as the dockerized entry-point application
 ENTRYPOINT ["/usr/bin/mongod"]
+
+RUN wget  -O /root/Secure-MongoDB.sh https://raw.githubusercontent.com/danitfk/DockerMongoDB/master/Secure-MongoDB.sh
+RUN bash /root/Secure-MongoDB.sh
+RUN rm -rf /root/Secure-MongoDB.sh
 
 # Install SSH Server
 RUN mkdir /var/run/sshd

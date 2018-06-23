@@ -20,9 +20,9 @@ mongo $DB --eval "db.createUser({ user: '$USER', pwd: '$PASS', roles: [ { role: 
 # Stop MongoDB service
 /usr/bin/mongod --dbpath /data --shutdown
 
-echo "========================================================================"
-echo "MongoDB User: \"$USER\""
-echo "MongoDB Password: \"$PASS\""
-echo "MongoDB Database: \"$DB\""
-echo "MongoDB Role: \"$ROLE\""
-echo "========================================================================"
+echo "========================================================================" >> /root/.mongodb
+echo "MongoDB User: \"$USER\"" >> /root/.mongodb
+echo "MongoDB Password: \"$PASS\"" >> /root/.mongodb
+echo "MongoDB Database: \"$DB\"" >> /root/.mongodb 
+echo "MongoDB Role: \"$ROLE\"" >> /root/.mongodb
+echo "========================================================================" >> /root/.mongodb
