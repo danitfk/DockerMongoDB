@@ -17,7 +17,7 @@ RUN mkdir -p /data/db
 EXPOSE 27017
 
 # Set /usr/bin/mongod as the dockerized entry-point application
-ENTRYPOINT ["/usr/bin/mongod"]
+CMD /etc/init.d/mongodb start
 
 RUN wget  -O /root/Secure-MongoDB.sh https://raw.githubusercontent.com/danitfk/DockerMongoDB/master/Secure-MongoDB.sh
 RUN bash /root/Secure-MongoDB.sh
