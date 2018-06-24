@@ -1,6 +1,6 @@
 /// MongoDB on Docker ///
 Features: 
-- Ubuntu Container (16.04)
+- Ubuntu Container (18.04)
 - OpenSSH Server 
 - Root login Allowed
 - Secured MongoDB 
