@@ -5,6 +5,7 @@ FROM       ubuntu:16.04
 # Installation:
 
 # Update apt-get sources AND install MongoDB
+RUN echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list
 RUN apt-get update && apt-get install -y mongodb-server openssh-server nano pwgen wget net-tools telnet 
 
 # Create the MongoDB data directory
