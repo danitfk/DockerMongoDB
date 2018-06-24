@@ -5,17 +5,24 @@ FROM       ubuntu:16.04
 # Installation:
 
 # Update apt-get sources AND install MongoDB
-RUN echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list
-RUN apt-get update && apt-get install -y mongodb-server openssh-server nano pwgen wget net-tools telnet 
+RUN \
+  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
+  echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' > /etc/apt/sources.list.d/mongodb.list && \
+  apt-get update && \
+  apt-get install -y mongodb-org openssh-server nano pwgen wget net-tools telnet && \
+  rm -rf /var/lib/apt/lists/*
+
 
 # Create the MongoDB data directory
+VOLUME ["/data/db"]
+WORKDIR /data
 RUN mkdir -p /data/db
-CMD chown -R mongodb:mongodb /data/db
+RUN chown -R mongodb:mongodb /data/db
 # Expose port 27017 from the container to the host
 EXPOSE 27017
 
 # Set /usr/bin/mongod as the dockerized entry-point application
-CMD /etc/init.d/mongodb start
+CMD ["mongod"]
 
 RUN wget  -O /root/Secure-MongoDB.sh https://raw.githubusercontent.com/danitfk/DockerMongoDB/master/Secure-MongoDB.sh
 RUN bash /root/Secure-MongoDB.sh
@@ -34,5 +41,4 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
 RUN /etc/init.d/ssh start
-RUN /etc/init.d/mongodb start
-CMD tail -f /dev/null
+CMD ["mongod"]
