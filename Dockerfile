@@ -1,16 +1,16 @@
-# Based on Ubuntu 16.04
+# Based on Ubuntu 18.04
 
-FROM       ubuntu:16.04
+FROM       ubuntu:18.04
 
 # Installation:
 
 # Update apt-get sources AND install MongoDB
-RUN \
-  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 && \
-  echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' > /etc/apt/sources.list.d/mongodb.list && \
-  apt-get update && \
-  apt-get install -y mongodb-org openssh-server nano pwgen wget net-tools telnet && \
-  rm -rf /var/lib/apt/lists/*
+RUN apt-get update
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+RUN echo 'deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/testing multiverse' | tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+RUN apt-get update
+RUN apt-get install -y mongodb-org openssh-server net-tools pwgen 
+
 
 
 # Create the MongoDB data directory
@@ -22,8 +22,7 @@ RUN chown -R mongodb:mongodb /data/db
 EXPOSE 27017
 
 # Set /usr/bin/mongod as the dockerized entry-point application
-CMD ["mongod"]
-
+CMD ["/usr/bin/mongod", "--bind_ip_all"]
 RUN wget  -O /root/Secure-MongoDB.sh https://raw.githubusercontent.com/danitfk/DockerMongoDB/master/Secure-MongoDB.sh
 RUN bash /root/Secure-MongoDB.sh
 RUN rm -rf /root/Secure-MongoDB.sh
@@ -41,4 +40,4 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
 RUN /etc/init.d/ssh start
-CMD ["mongod"]
+ENTRYPOINT ["/usr/bin/mongod", "--bind_ip_all"]
