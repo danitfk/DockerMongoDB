@@ -16,6 +16,9 @@ fi
 echo "Creating user: \"$USER\"..."
 mongo $DB --eval "db.createUser({ user: '$USER', pwd: '$PASS', roles: [ { role: '$ROLE', db: '$DB' } ] });"
 sed -i 's/bind_ip = 127.0.0.1/bind_ip = 0.0.0.0/g' /etc/mongodb.conf
+sed -i '/Security:/d' /etc/mongodb.conf
+echo "security:" >> /etc/mongodb.conf
+echo '  authorization: "enabled"' >> /etc/mongodb.conf
 
 # Stop MongoDB service
 /usr/bin/mongod --dbpath /data --shutdown
