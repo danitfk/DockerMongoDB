@@ -1,6 +1,6 @@
-# Based on Ubuntu 18.04
+# Based on Ubuntu 16.04
 
-FROM       ubuntu:18.04
+FROM       ubuntu:16.04
 
 # Installation:
 
@@ -8,7 +8,7 @@ FROM       ubuntu:18.04
 RUN apt-get update
 RUN apt-get install gnupg -y
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
-RUN echo 'deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/testing multiverse' | tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+RUN echo 'deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/testing multiverse' | tee /etc/apt/sources.list.d/mongodb-org-3.6.list
 RUN apt-get update
 RUN apt-get install -y mongodb-org openssh-server net-tools pwgen 
 
