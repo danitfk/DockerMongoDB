@@ -40,4 +40,4 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
 RUN /etc/init.d/ssh start
-ENTRYPOINT ["/usr/bin/mongod", "--bind_ip_all"]
+CMD mongod
